@@ -77,13 +77,18 @@ class Player:
 
     # Method to let player pick their bet
     def place_bet(self):
-        bet_amount = float(input(f"{self.name}, you have {self.funds} funds. How much would you like to bet?"))
-        if bet_amount > self.funds:
-            print("You cannot bet more than you have. Please try again.")
+        try:
+            bet_amount = float(input(f"{self.name}, you have {self.funds} funds. How much would you like to bet?"))
+        except ValueError:
+            print("Invalid input. Please enter a valid number for the bet amount.")
             return self.place_bet()
         else:
-            self.funds -= bet_amount
-            return bet_amount
+            if bet_amount > self.funds:
+                print("You cannot bet more than you have. Please try again.")
+                return self.place_bet()    
+        self.funds -= bet_amount
+        return bet_amount
+            
 
 
 
